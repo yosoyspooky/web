@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Complex Marker Icons</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 90%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 90%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nena {
+            width: 24%
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="margin: 20px">
+        <select class="browser-default custom-select nena">
+            <option selected>Nivel</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <select class="browser-default custom-select nena">
+            <option selected>Nivel</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <select class="browser-default custom-select nena">
+            <option selected>Nivel</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+
+        <button id="onClickHome" class="login100-form-btn nena" style="background: #1a2338 !important;color: white">
+            Buscar
+        </button>
+
+
+    </div>
+    <div id="map"></div>
+
+
+    <script>
+
+        // The following example creates complex markers to indicate beaches near
+        // Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
+        // to the base of the flagpole.
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: { lat: -5.175355, lng: -80.655605 }
+            });
+
+            setMarkers(map);
+        }
+
+        // Data for the markers consisting of a name, a LatLng and a zIndex for the
+        // order in which these markers should display on top of each other.
+        var beaches = [
+            ['Bondi Beach', -5.176194, -80.665734, 10],
+            ['Bondi Beach', -5.178278, -80.647688, 9],
+            ['Bondi Beach', -5.178478, -80.646580, 8],
+            ['Bondi Beach', -5.178578, -80.645460, 7],
+
+            ['Bondi Beach', -5.179194, -80.665934, 5],
+            ['Bondi Beach', -5.178278, -80.647688, 4],
+            ['Bondi Beach', -5.178878, -80.686580, 3],
+            ['Bondi Beach', -5.178878, -80.685460, 2],
+            ['Bondi Beach', -5.178478, -80.648940, 1]
+
+        ];
+
+        document.getElementById("onClickHome").addEventListener("click", displayDate);
+
+        function displayDate() {
+            beaches.push(['Bondi Beach', -5.178778, -80.648940, 6])
+            initMap();
+        }
+
+
+
+
+        function setMarkers(map) {
+            // Adds markers to the map.
+
+            // Marker sizes are expressed as a Size of X,Y where the origin of the image
+            // (0,0) is located in the top left of the image.
+
+            // Origins, anchor positions and coordinates of the marker increase in the X
+            // direction to the right and in the Y direction down.
+            var image = {
+                // url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                url: 'av.png',
+                // This marker is 20 pixels wide by 32 pixels high.
+                size: new google.maps.Size(20, 32),
+                // The origin for this image is (0, 0).
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at (0, 32).
+                anchor: new google.maps.Point(0, 32)
+            };
+            // Shapes define the clickable region of the icon. The type defines an HTML
+            // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+            // The final coordinate closes the poly by connecting to the first coordinate.
+            var shape = {
+                coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                type: 'poly'
+            };
+            for (var i = 0; i < beaches.length; i++) {
+                var beach = beaches[i];
+                var marker = new google.maps.Marker({
+                    position: { lat: beach[1], lng: beach[2] },
+                    map: map,
+                    icon: image,
+                    shape: shape,
+                    title: beach[0],
+                    zIndex: beach[3]
+                });
+            }
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClK74hNsEW6_FwUMNE2IW3AfnlWeyT1xA&callback=initMap">
+        </script>
+<!-- 
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClK74hNsEW6_FwUMNE2IW3AfnlWeyT1xA&callback=initMap">
+        </script> -->
+</body>
+
+</html>
